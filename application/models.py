@@ -1,4 +1,4 @@
-from db import mongodb
+from application.db import mongodb
 
 
 class UserModel(mongodb.Document):

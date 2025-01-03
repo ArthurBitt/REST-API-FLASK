@@ -1,23 +1,11 @@
-from flask import Flask, jsonify
-from flask_restful import Resource, Api, reqparse
+from flask import jsonify
+from flask_restful import Resource,reqparse
 from mongoengine import NotUniqueError
 
-from db import mongodb
 from validate_docbr import CPF
-from models import UserModel
+from application.models import UserModel
 
-app = Flask(__name__)
-api = Api(app)
 
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'flask_api',
-    'host': 'mongodb',
-    'port': 27017,
-    'username': 'admin',
-    'password': 'admin'
-}
-
-mongodb.init_app(app)
 _user_parser = reqparse.RequestParser()
 _user_parser.add_argument(
     'name', type=str, required=True, help='This field cannot be left blank'
@@ -59,11 +47,7 @@ class User(Resource):
 
     @staticmethod
     def get(cpf):
-        return {'message': ' CPF'}
-
-
-api.add_resource(Users, '/users')
-api.add_resource(User, '/user', '/user/<string:cpf>')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+        query = UserModel.objects(cpf=cpf).first()
+        if query:
+            return jsonify(query)
+        return {'message': 'User not found'}, 404

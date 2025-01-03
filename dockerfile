@@ -1,8 +1,6 @@
-FROM python:3.10-alpine
+FROM python:3.10-slim
 
 WORKDIR /app
-
-FROM python:3.10-slim
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
@@ -20,7 +18,9 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=development
+
+CMD ["flask", "run", "--host=0.0.0.0"]

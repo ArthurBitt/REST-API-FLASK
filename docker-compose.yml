@@ -18,3 +18,5 @@ services:
       - mongodb
     volumes:
       - .:/app
+    environment:
+      - FLASK_ENV=development
