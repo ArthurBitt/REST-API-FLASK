@@ -1,5 +1,5 @@
 from flask import jsonify
-from flask_restful import Resource,reqparse
+from flask_restful import Resource, reqparse
 from mongoengine import NotUniqueError
 
 from validate_docbr import CPF

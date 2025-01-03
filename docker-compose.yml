@@ -17,6 +17,10 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - .:/app
+      - ./application:/app/application
     environment:
       - FLASK_ENV=development
+      - MONGO_DB=flask_api
+      - MONGO_HOST=mongodb
+      - MONGO_USER=admin
+      - MONGO_PASS=admin

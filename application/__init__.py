@@ -3,6 +3,7 @@ from flask_restful import Api
 from application.db import mongodb
 from application.app import Users, User
 
+
 def create_app(config):
     app = Flask(__name__)
     api = Api(app)
@@ -13,4 +14,3 @@ def create_app(config):
     api.add_resource(User, '/user', '/user/<string:cpf>')
 
     return app
-
