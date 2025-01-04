@@ -41,9 +41,11 @@ class User(Resource):
             return {'message': 'Invalid CPF'}, 400
         try:
             response = UserModel(**data).save()
-            return {'message': 'User %s created successfully' % response.id}
+            return (
+                {'message': 'User %s created successfully' % response.id}, 201
+            )
         except NotUniqueError:
-            return {'message': 'CPF already registered'}
+            return {'message': 'CPF already registered'}, 400
 
     @staticmethod
     def get(cpf):
