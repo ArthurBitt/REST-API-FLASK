@@ -1,5 +1,8 @@
-
 import os
+import urllib.parse
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class DevelopmentConfig:
@@ -13,6 +16,24 @@ class DevelopmentConfig:
     }
 
 
+class ProductionConfig:
+    MONGO_USER = os.getenv('MONGO_USER')
+    MONGO_PASS = os.getenv('MONGO_PASS')
+    MONGO_HOST = os.getenv('MONGO_HOST')
+    MONGO_DB = os.getenv('MONGO_DB')
+
+    MONGODB_SETTINGS = {
+        'host': 'mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority&\
+appName=cluster-flask-rest-api' % (
+            urllib.parse.quote_plus(MONGO_USER),
+            urllib.parse.quote_plus(MONGO_PASS),
+            urllib.parse.quote_plus(MONGO_HOST),
+            urllib.parse.quote_plus(MONGO_DB)
+        ),
+        'uuidRepresentation': 'standard'
+    }
+
+
 class MockConfig:
     DEBUG = True
     TESTING = True
@@ -21,7 +42,3 @@ class MockConfig:
         'host': 'mongomock://localhost',
         'uuidRepresentation': 'standard'
     }
-
-
-class ProductionConfig:
-    ...
