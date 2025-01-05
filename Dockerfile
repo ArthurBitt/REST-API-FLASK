@@ -16,12 +16,13 @@ RUN pip install --upgrade pip setuptools
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# Install gunicorn
+RUN pip install gunicorn
+
 COPY wsgi.py .
 COPY config.py .
 COPY application application
 
 EXPOSE 5000
 
-ENV FLASK_ENV=development
-
-CMD ["python", "wsgi.py"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "wsgi:app"]

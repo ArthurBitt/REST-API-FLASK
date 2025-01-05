@@ -19,7 +19,7 @@ services:
     volumes:
       - ./application:/app/application
     environment:
-      - FLASK_ENV=development
+      - FLASK_ENV=${FLASK_ENV:-development}
       - MONGO_DB=flask_api
       - MONGO_HOST=mongodb
       - MONGO_USER=admin
